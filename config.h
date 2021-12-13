@@ -36,7 +36,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -44,8 +44,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Steam",	 "Steam", 	NULL,	  	  1 << 3,		1,			-1 },
+	{ "Steam",	 "Steam", "Friends List", 1 << 3,		1,			-1 },
+	{ "Steam",	 "Steam", 	"Steam",	  1 << 3,		0,			-1 },
+
 };
 
 /* layout(s) */
@@ -108,15 +111,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	//{ MODKEY|ControlMask,			XK_comma,  cyclelayout,    {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_t, cyclelayout,    {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_t, 		cyclelayout,    {.i = +1 } },
 	//{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	//{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
 	//{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
 	//{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	//{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
+	{ MODKEY,             			XK_space,  togglefloating, 	{0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -159,6 +162,7 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,         Button1,        tag,   
+         {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
