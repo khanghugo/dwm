@@ -47,8 +47,8 @@ static const Rule rules[] = {
 	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Steam",	 "Steam", 	NULL,	  	  1 << 3,		1,			-1 },
 	{ "Steam",	 "Steam", "Friends List", 1 << 3,		1,			-1 },
-	{ "Steam",	 "Steam", 	"Steam",	  1 << 3,		0,			-1 },
-
+	{ "Steam",	 "Steam", 	"Steam",	  1 << 3,		0,			-1 },	
+	{ "Steam",	 "Steam", "Steam - News", 1 << 3,		1,			-1 },
 };
 
 /* layout(s) */
@@ -83,7 +83,6 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/usr/local/bin/st", "-c", cmd, NULL } }
 
 /* commands */
-// brightness
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
@@ -112,12 +111,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	//{ MODKEY|ControlMask,			XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_t, 		cyclelayout,    {.i = +1 } },
-	//{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	//{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	//{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
-	//{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
-	//{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY,             			XK_space,  togglefloating, 	{0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
