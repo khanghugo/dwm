@@ -46,9 +46,8 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Steam",	 "Steam", 	NULL,	  	  1 << 3,		1,			-1 },
-	{ "Steam",	 "Steam", "Friends List", 1 << 3,		1,			-1 },
-	{ "Steam",	 "Steam", 	"Steam",	  1 << 3,		0,			-1 },	
-	{ "Steam",	 "Steam", "Steam - News", 1 << 3,		1,			-1 },
+	{ "Steam",	 "Steam", 	NULL, 1 << 3,		1,					0 },
+	{ "dota2", 		"dota2", NULL, 			1 << 8, 	0,			0},
 };
 
 /* layout(s) */
@@ -112,6 +111,7 @@ static Key keys[] = {
 	//{ MODKEY|ControlMask,			XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_t, 		cyclelayout,    {.i = +1 } },
 	{ MODKEY,             			XK_space,  togglefloating, 	{0} },
+	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },

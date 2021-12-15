@@ -247,6 +247,7 @@ static void tagmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglealwaysontop(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -934,7 +935,7 @@ drawbar(Monitor *m)
 		stw = getsystraywidth();
 
 	/* draw status first so it can be overdrawn by tags later */
-	if (m == selmon) { /* status is only drawn on selected monitor */
+	if (m == selmon || statusall) { /* status is only drawn on selected monitor */
 		//tw = m->ww - drawstatusbar(m, bh, stext);
 		drw_setscheme(drw, scheme[SchemeStatus]);
 		tw = TEXTW(stext) - lrpad / 2 + 2; /* 2px extra right padding */
@@ -953,9 +954,10 @@ drawbar(Monitor *m)
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeTagsSel : SchemeTagsNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		if (occ & 1 << i)
-			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-				urg & 1 << i);
+			drw_rect(drw, x + boxw, 0, w - ( 2 * boxw + 1), (boxw / 3 * 2),
+			    m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+			    urg & 1 << i);
+
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
@@ -1014,9 +1016,8 @@ expose(XEvent *e)
 	XExposeEvent *ev = &e->xexpose;
 
 	if (ev->count == 0 && (m = wintomon(ev->window))) {
-		drawbar(m);
-		if (m == selmon)
-			updatesystray();
+		statusall ? drawbars() : drawbar(m);drawbar(m);
+		updatesystray();
 	}
 }
 
@@ -1068,6 +1069,8 @@ focusmon(const Arg *arg)
 	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 2);
 	selmon = m;
 	focus(NULL);
+	if (selmon->sel)
+		XWarpPointer(dpy, None, selmon->sel->win, 0, 0, 0, 0, selmon->sel->w/2, selmon->sel->h/2);
 }
 
 void
@@ -1093,6 +1096,7 @@ focusstack(const Arg *arg)
 	if (c) {
 		focus(c);
 		restack(selmon);
+		XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2);
 	}
 }
 
@@ -1512,7 +1516,7 @@ propertynotify(XEvent *e)
 		if (ev->atom == XA_WM_NAME || ev->atom == netatom[NetWMName]) {
 			updatetitle(c);
 			if (c == c->mon->sel)
-				drawbar(c->mon);
+				statusall ? drawbars() : drawbar(c->mon);
 		}
 		if (ev->atom == netatom[NetWMWindowType])
 			updatewindowtype(c);
@@ -1660,7 +1664,7 @@ restack(Monitor *m)
 	XEvent ev;
 	XWindowChanges wc;
 
-	drawbar(m);
+	statusall ? drawbars() : drawbar(m);
 	if (!m->sel)
 		return;
 	if (m->sel->isfloating || !m->lt[m->sellt]->arrange)
@@ -1925,7 +1929,7 @@ setlayout(const Arg *arg)
 	if (selmon->sel)
 		arrange(selmon);
 	else
-		drawbar(selmon);
+		statusall ? drawbars() : drawbar(selmon);
 }
 
 /* arg > 1.0 will set mfact absolutely */
@@ -2161,6 +2165,28 @@ togglefloating(const Arg *arg)
 	arrange(selmon);
 }
 
+void
+togglealwaysontop(const Arg *arg)
+{
+	if (!selmon->sel)
+		return;
+	if (selmon->sel->isfullscreen)
+		return;
+
+	if(selmon->sel->isalwaysontop){
+		selmon->sel->isalwaysontop = 0;
+	}else{
+		/* disable others */
+		for(Monitor *m = mons; m; m = m->next)
+			for(Client *c = m->clients; c; c = c->next)
+				c->isalwaysontop = 0;
+
+		/* turn on, make it float too */
+		selmon->sel->isfloating = 1;
+		selmon->sel->isalwaysontop = 1;
+	}
+	arrange(selmon);
+}
 void
 toggletag(const Arg *arg)
 {
@@ -2441,9 +2467,14 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
+	Monitor* m;
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
 		strcpy(stext, "dwm-"VERSION);
-	drawbar(selmon);
+	for (m=mons; m; m = m->next) {
+		if (statusall)
+			drawbar(m);
+	}
+	//statusall ? drawbars() : drawbar(selmon);
 	updatesystray();
 }
 
