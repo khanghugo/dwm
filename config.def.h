@@ -48,6 +48,7 @@ static const Rule rules[] = {
 	{ "Steam",	 "Steam", 	NULL,	  	  1 << 3,		1,			-1 },
 	{ "Steam",	 "Steam", 	NULL, 1 << 3,		1,					0 },
 	{ "dota2", 		"dota2", NULL, 			1 << 8, 	0,			0},
+	{ "steam_app_", "steam_app_", NULL, 			1 << 7, 	0,			0},
 };
 
 /* layout(s) */
