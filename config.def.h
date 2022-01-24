@@ -117,8 +117,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_f,      togglefullscreen, {0} },
-	{ MODKEY|ShiftMask,             XK_f,      togglefakefullscreen, {0} },
 	{ 0,       		XF86XK_MonBrightnessUp, 	spawn,    	{.v = brightness_up}},
 	{ 0,       		XF86XK_MonBrightnessDown, 	spawn, 		{.v = brightness_down}},
 	{ 0, 			XF86XK_AudioRaiseVolume, 	spawn, 		{.v = volume_up}},
