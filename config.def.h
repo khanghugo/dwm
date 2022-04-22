@@ -10,8 +10,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Hack:size=11" };
-static const char dmenufont[]       = "Hack:size=11";
+static const char *fonts[]          = { "Hack:size=12" };
+static const char dmenufont[]       = "Hack:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -33,9 +33,16 @@ static const char *colors[][3]      = {
 	[SchemeInfoSel]  = { col_gruvfont, col_gruvblue,  "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
 	[SchemeInfoNorm]  = { col_gruvfontdark, col_gruvbg,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
+static const char *const autostart[] = {
+	"xrandr", "--output", "eDP-1-1", "--primary", NULL,
+	"xrandr", "--output", "HDMI-0", "--auto", "--left-of", "eDP-1-1", NULL,
+	"slstatus", NULL,
+	"easyeffects", "--gapplication-service", NULL,
+	NULL
+};
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
