@@ -35,7 +35,7 @@ static const char *colors[][3]      = {
 };
 static const char *const autostart[] = {
 	"xrandr", "--output", "eDP-1-1", "--primary", NULL,
-	"xrandr", "--output", "HDMI-0", "--auto", "--left-of", "eDP-1-1", NULL,
+	"xrandr", "--output", "HDMI-0", "--left-of", "eDP-1-1", NULL,
 	"slstatus", NULL,
 	"easyeffects", "--gapplication-service", NULL,
 	NULL
@@ -101,6 +101,7 @@ static const char *volume_mute[] = {"amixer", "-q", "sset", "Master", "toggle", 
 static const char *flameshot_gui[] = {"flameshot", "gui", NULL};
 static const char *flameshot_clipboard[] = {"flameshot", "full", "-c", NULL};
 static const char *flameshot_launcher[] = {"flameshot", "launcher", NULL};
+static const char *slock[] = {"slock", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -134,6 +135,7 @@ static Key keys[] = {
 	{ 0, 							XK_Print, 	spawn,		{.v = flameshot_gui}},
 	{ MODKEY, 						XK_Print, 	spawn,		{.v = flameshot_clipboard}},
 	{ MODKEY|ShiftMask, 			XK_Print, 	spawn,		{.v = flameshot_launcher}},
+	{ MODKEY|ShiftMask, 			XK_l, 		spawn,		{.v = slock}},
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
