@@ -34,8 +34,8 @@ static const char *colors[][3]      = {
 	[SchemeInfoNorm]  = { col_gruvfontdark, col_gruvbg,  "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 static const char *const autostart[] = {
-	"xrandr", "--output", "eDP-1-1", "--primary", NULL,
-	"xrandr", "--output", "HDMI-0", "--left-of", "eDP-1-1", NULL,
+	//"xrandr", "--output", "eDP-1-1", "--primary", "--output", "HDMI-0", "--auto", "--left-of", "eDP-1-1", NULL,
+	"xrandr", "--output", "DP-0", "--mode", "1920x1080", "--rate", "143.85", "--primary", "--output", "HDMI-0", "--mode", "1920x1080", "--right-of", "DP-0", "--rotate", "right", NULL,
 	"slstatus", NULL,
 	"easyeffects", "--gapplication-service", NULL,
 	NULL
@@ -74,6 +74,8 @@ static const Layout layouts[] = {
  	{ "[@]",      spiral },
  	{ "[]=",      tile },
  	{ "[M]",      monocle },
+ 	{ "TTT",      bstack },
+ 	{ "===",      bstackhoriz },
  	{ NULL,       NULL },
  	//{ "[\\]",      dwindle },
 };
