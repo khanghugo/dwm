@@ -35,7 +35,7 @@ static const char *colors[][3]      = {
 };
 static const char *const autostart[] = {
 	//"xrandr", "--output", "eDP-1-1", "--primary", "--output", "HDMI-0", "--auto", "--left-of", "eDP-1-1", NULL,
-	"xrandr", "--output", "DP-0", "--mode", "1920x1080", "--rate", "143.85", "--primary", "--output", "HDMI-0", "--mode", "1920x1080", "--right-of", "DP-0", "--rotate", "right", NULL,
+	"xrandr", "--output", "HDMI-0", "--mode", "1920x1080", "--right-of", "DP-0", "--rotate", "right", "--output", "DP-0", "--mode", "1920x1080", "--rate", "143.85", "--primary", NULL,
 	"slstatus", NULL,
 	"easyeffects", "--gapplication-service", NULL,
 	NULL
@@ -49,13 +49,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Steam",	 "Steam", 	NULL,	  	  1 << 3,		1,			-1 },
-	{ "Steam",	 "Steam", 	NULL, 1 << 3,		1,					0 },
-	{ "dota2", 		"dota2", NULL, 			1 << 8, 	0,			0},
-	{ "steam_app_", "steam_app_", NULL, 			1 << 7, 	0,			0},
-	{ "pcmanfm",  NULL,       NULL,       1 << 1,       0,           -1 },
+	/* class      		instance    	title 	tags mask 	isfloating 	monitor */
+	{ "firefox",  		NULL,       	NULL,   1 << 1,     0,          -1 	},
+	{ "Steam",	 		"Steam", 		NULL,	1 << 3,		1,			-1 	},
+	{ "Steam",	 		"Steam", 		NULL, 	1 << 3,		1,			0 	},
+	{ "dota2", 			"dota2", 		NULL,	1 << 8, 	0,			0 	},
+	{ "steam_app_", 	"steam_app_", 	NULL, 	1 << 7, 	0,			0 	},
+	{ NULL,  			"pcmanfm",      NULL,   0,       	1,          -1 	},
+	{ NULL, 			"Counter-Strike",NULL,   1 << 7,     0,          0 	},
 };
 
 /* layout(s) */
