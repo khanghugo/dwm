@@ -2,7 +2,8 @@
 #include <X11/XF86keysym.h>
 /* appearance */
 static const unsigned int borderpx  = 5;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int snap      = 32; 
+static const int swallowfloating    = 0;        /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 5;   /* systray spacing */
@@ -49,14 +50,20 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    	title 	tags mask 	isfloating 	monitor */
-	{ "firefox",  		NULL,       	NULL,   1 << 1,     0,          -1 	},
-	{ "Steam",	 		"Steam", 		NULL,	1 << 3,		1,			-1 	},
-	{ "Steam",	 		"Steam", 		NULL, 	1 << 3,		1,			0 	},
-	{ "dota2", 			"dota2", 		NULL,	1 << 8, 	0,			0 	},
-	{ "steam_app_", 	"steam_app_", 	NULL, 	1 << 7, 	0,			0 	},
-	{ NULL,  			"pcmanfm",      NULL,   0,       	1,          -1 	},
-	{ NULL, 			"Counter-Strike",NULL,   1 << 7,     0,          0 	},
+	/* class		instance		title           tags mask 	isfloating	isterminal 	noswallow 	monitor */
+	{ "firefox",	NULL,       	NULL,   		1 << 1,     0,          0, 			1, 			-1 	},
+	{ "Steam",	 	"Steam", 		NULL, 			1 << 3,		1,			0, 			1, 			0 	},
+	{ "dota2", 		"dota2", 		NULL,			1 << 8, 	0,			0, 			1, 			0 	},
+	{ "steam_app_", "steam_app_", 	NULL, 			1 << 7, 	0,			0, 			1, 			0 	},
+	{ "hl_", 		NULL 			,NULL,   		1 << 7,     0,          0, 			0, 			0 	},
+		
+	// swallow config, there are many stuffs are automatically like `chromium google.com`
+	{ NULL,      	NULL,     		"Event Tester", 0,         	0,          0,          1,        	-1 	}, /* xev */
+	{ "st-256color",NULL, 			NULL, 			0, 			0, 			1, 			1, 			-1	},
+	{ "mpv", 		NULL, 			NULL, 			0, 			0, 			0, 			0,			-1 	},
+	{ "libreoffice", NULL,			NULL,			0,			0,			0,			0,			-1	},
+	{ "Pcmanfm",  	NULL,      		NULL,   		0,       	1,          0, 			0, 			-1 	},
+	{ "discord", 	NULL, 			NULL, 			0, 			0, 			0, 			0,			-1 	},
 };
 
 /* layout(s) */
@@ -120,7 +127,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY|ControlMask,           XK_t, 	   cyclelayout,    {.i = +1 } },
+	{ MODKEY|ShiftMask,           	XK_t, 	   cyclelayout,    {.i = +1 } },
 	{ MODKEY,             			XK_space,  togglefloating, 	{0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglealwaysontop, {0} },
