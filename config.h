@@ -54,7 +54,7 @@ static const Rule rules[] = {
 	{ "firefox",	NULL,       	NULL,   		1 << 1,     0,          0, 			1, 			-1 	},
 	{ "Steam",	 	"Steam", 		NULL, 			1 << 3,		1,			0, 			1, 			0 	},
 	{ "dota2", 		"dota2", 		NULL,			1 << 8, 	0,			0, 			1, 			0 	},
-	{ "steam_app_", "steam_app_", 	NULL, 			1 << 7, 	0,			0, 			1, 			0 	},
+	{ "steam_app_", "steam_app_", 	NULL, 			1 << 7, 	1,			0, 			1, 			0 	},
 	{ "hl_", 		NULL 			,NULL,   		1 << 7,     0,          0, 			0, 			0 	},
 		
 	// swallow config, there are many stuffs are automatically like `chromium google.com`
@@ -63,7 +63,7 @@ static const Rule rules[] = {
 	{ "mpv", 		NULL, 			NULL, 			0, 			0, 			0, 			0,			-1 	},
 	{ "libreoffice", NULL,			NULL,			0,			0,			0,			0,			-1	},
 	{ "Pcmanfm",  	NULL,      		NULL,   		0,       	1,          0, 			0, 			-1 	},
-	{ "discord", 	NULL, 			NULL, 			0, 			0, 			0, 			0,			-1 	},
+	{ "discord", 	NULL, 			NULL, 			1 << 3, 	1, 			0, 			0,			1 	},
 };
 
 /* layout(s) */
