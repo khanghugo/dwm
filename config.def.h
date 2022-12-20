@@ -43,8 +43,8 @@ static const char *const autostart[] = {
 	//"xrandr", "--output", "eDP-1-1", "--primary", "--output", "HDMI-0", "--auto", "--left-of", "eDP-1-1", NULL,
 	"xrandr", "--output", "HDMI-0", "--mode", "1920x1080", "--right-of", "DP-0", "--rotate", "right", "--output", "DP-0", "--mode", "1920x1080", "--rate", "143.85", "--primary", NULL,
 	"slstatus", NULL,
-	"easyeffects", "--gapplication-service", NULL,
-	"feh", "--bg-fill", "~/Pictures/.bg/*", NULL, // different monitor will assigned different picture as listed in folder
+	// "easyeffects", "--gapplication-service", NULL,
+	// "feh", "--bg-fill", "~/Pictures/.bg/*", NULL, // different monitor will assigned different picture as listed in folder
 	NULL
 };
 
